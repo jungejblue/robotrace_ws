@@ -1,0 +1,44 @@
+# Current and legacy ROS build outputs
+/.build/
+/build/
+/build_*/
+/devel/
+/devel_*/
+/install/
+/install_*/
+/log/
+/log_*/
+/.catkin_workspace/
+
+# Local datasets; keep placeholders and optional data instructions
+/data/*
+!/data/.gitkeep
+!/data/README.md
+
+# Generated metrics, normalized bags and ROS logs
+/results/*
+!/results/.gitkeep
+!/results/README.md
+
+# ROS recordings accidentally copied outside data/results
+*.bag
+*.bag.active
+*.bag.orig
+*.bag.zst
+*.db3
+
+# Python environments and caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+/.venv/
+
+# Machine-specific editor settings and temporary files
+/.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Track src/, thirdparty/, YAML/JSON configs, manifests and license notices.
+# Do not add broad rules such as thirdparty/, *.yaml or *.json.

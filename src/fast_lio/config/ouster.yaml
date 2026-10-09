@@ -1,0 +1,45 @@
+# Local FAST-LIO odometry for the independent CUDA prior-map localizer.
+# PointCloud2 is in os_sensor, so extrinsic_T maps os_sensor -> os_imu.
+# IMU initialization preserves its estimated (possibly tilted) odom gravity.
+# /lio/gravity exposes this gravity for GNSS map initialization.
+# lio_imu is coincident with os_imu but has its own TF name to avoid two parents.
+common:
+  lid_topic: /ouster/points
+  imu_topic: /ouster/imu
+  time_offset_lidar_to_imu: 0.0
+preprocess:
+  lidar_type: 3
+  scan_line: 64
+  timestamp_unit: 3
+  blind: 4
+  scan_rate: 20
+  max_scan_duration_s: 0.1
+mapping:
+  acc_cov: 0.1
+  gyr_cov: 0.1
+  b_acc_cov: 0.0001
+  b_gyr_cov: 0.0001
+  fov_degree: 180
+  det_range: 150.0
+  extrinsic_est_en: false
+  extrinsic_T:
+  - -0.006253
+  - 0.011775
+  - -0.007645
+  extrinsic_R:
+  - 1
+  - 0
+  - 0
+  - 0
+  - 1
+  - 0
+  - 0
+  - 0
+  - 1
+publish:
+  path_en: false
+  scan_publish_en: false
+  dense_publish_en: false
+  scan_bodyframe_pub_en: true
+  odom_frame: odom
+  body_frame: lio_imu

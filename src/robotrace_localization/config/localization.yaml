@@ -1,0 +1,66 @@
+# Fixed ENU assumption supplied in the conversation; verify against GLIM export.
+gnss_initializer:
+  enu_origin:
+    latitude: 36.729539
+    longitude: 127.4408323
+    ellipsoid_height: 103.230
+  map_frame: map
+  rear_topic: /ublox_gps_rear/navpvt
+  front_topic: /ublox_gps_front/navpvt
+  seed_topic: /robotrace/gnss_seed
+  # Measurement UTC/iTOW tolerance, not bag arrival delay. Prefer shared epochs.
+  pair_tolerance_s: 0.010
+  max_sample_age_s: 1.0
+  future_tolerance_s: 0.10
+  buffer_size: 100
+  max_h_accuracy_m: 0.20
+  max_v_accuracy_m: 0.50
+  min_h_accuracy_m: 0.01
+  min_v_accuracy_m: 0.02
+  # Horizontal rear-to-front baseline gate; confirm measured mount dimensions.
+  baseline_min_m: 0.80
+  baseline_max_m: 2.20
+  # IMU x is assumed to point forward along the antenna baseline.
+  yaw_offset_rad: 0.0
+  min_yaw_sigma_rad: 0.01745329252
+  max_yaw_sigma_rad: 0.34906585040
+
+gpu_map_localizer:
+  map_path: /ws/data/map_enu_v010.pcd
+  map_frame: map
+  odom_frame: odom
+  body_frame: lio_imu
+  # Rear antenna position expressed in IMU coordinates (not its inverse).
+  imu_to_rear_antenna_m: [-0.4213, 0.0118, -0.4876]
+  registration_hz: 5.0
+  source_leaf_m: 0.3
+  target_leaf_m: 0.3
+  vgicp_resolution_m: 1.0
+  # Start with the reference covariance-neighbor method, CUDA VGICP is active.
+  # Compare GPU_BRUTEFORCE / GPU_RBF_KERNEL after confirming alignment quality.
+  nearest_neighbor_method: CPU_PARALLEL_KDTREE
+  rbf_kernel_width_m: 0.5
+  cpu_threads: 2
+  crop_radius_m: 80.0
+  crop_half_height_m: 20.0
+  recenter_distance_m: 10.0
+  source_min_range_m: 4.0
+  source_max_range_m: 60.0
+  max_scan_age_s: 1.0
+  max_seed_age_s: 1.0
+  pose_buffer_s: 5.0
+  max_interpolation_gap_s: 0.12
+  max_iterations: 30
+  min_source_points: 200
+  min_target_points: 1000
+  validation_samples: 1000
+  validation_distance_m: 1.0
+  min_inlier_fraction: 0.5
+  max_inlier_rmse_m: 0.5
+  min_hessian_eigen_ratio: 0.00000001
+  max_correction_translation_m: 2.0
+  max_correction_rotation_deg: 15.0
+  rejections_before_lost: 10
+  publish_submap: true
+  publish_path: true
+  metrics_path: ""

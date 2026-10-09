@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>robotrace_localization</name>
+  <version>0.1.0</version>
+  <description>FAST-LIO local odometry, RTK initialization and CUDA VGICP prior-map registration.</description>
+  <maintainer email="robotrace@example.invalid">Robotrace workspace maintainers</maintainer>
+  <license>BSD-3-Clause</license>
+  <buildtool_depend>catkin</buildtool_depend>
+  <depend>roscpp</depend><depend>geometry_msgs</depend><depend>nav_msgs</depend>
+  <depend>sensor_msgs</depend><depend>std_msgs</depend><depend>std_srvs</depend>
+  <depend>diagnostic_msgs</depend><depend>tf2_ros</depend><depend>message_filters</depend>
+  <depend>pcl_ros</depend><depend>pcl_conversions</depend><depend>ublox_msgs</depend>
+  <depend>fast_gicp</depend><build_depend>eigen</build_depend>
+  <exec_depend>fast_lio</exec_depend>
+  <export/>
+</package>

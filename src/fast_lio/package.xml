@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>fast_lio</name>
+  <version>0.1.0</version>
+  <description>Ouster PointCloud2 FAST-LIO2 local odometry frontend for CUDA prior-map localization.</description>
+  <maintainer email="jungejblue@users.noreply.github.com">robotrace contributors</maintainer>
+  <license>GPL-2.0-only</license>
+  <license>BSD-3-Clause</license>
+  <author>FAST-LIO contributors</author>
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>message_generation</build_depend>
+  <exec_depend>message_runtime</exec_depend>
+  <depend>roscpp</depend><depend>geometry_msgs</depend><depend>nav_msgs</depend>
+  <depend>sensor_msgs</depend><depend>std_msgs</depend><depend>tf</depend>
+  <depend>pcl_ros</depend><depend>pcl_conversions</depend>
+  <depend>eigen</depend>
+  <export/>
+</package>

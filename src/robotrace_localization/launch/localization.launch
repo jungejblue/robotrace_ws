@@ -1,0 +1,22 @@
+<launch>
+  <arg name="use_sim_time" default="true"/>
+  <arg name="map_path" default="/ws/data/map_enu_v010.pcd"/>
+  <arg name="metrics_path" default=""/>
+  <arg name="nearest_neighbor_method" default="CPU_PARALLEL_KDTREE"/>
+  <arg name="config" default="$(find robotrace_localization)/config/localization.yaml"/>
+  <param name="use_sim_time" value="$(arg use_sim_time)"/>
+  <rosparam command="load" file="$(arg config)"/>
+  <include file="$(find fast_lio)/launch/odometry.launch"/>
+  <!-- lio_imu and os_imu denote the same physical frame but have distinct TF names.
+       Preserve the bag's os_sensor -> os_imu and os_sensor -> os_lidar edges. -->
+  <node pkg="tf2_ros" type="static_transform_publisher" name="lio_imu_to_os_sensor"
+        args="-0.006253 0.011775 -0.007645 0 0 0 lio_imu os_sensor"/>
+  <node pkg="robotrace_localization" type="gnss_initializer_node"
+        name="gnss_initializer" output="screen" required="true"/>
+  <node pkg="robotrace_localization" type="gpu_map_localizer_node"
+        name="gpu_map_localizer" output="screen" required="true">
+    <param name="map_path" value="$(arg map_path)"/>
+    <param name="metrics_path" value="$(arg metrics_path)"/>
+    <param name="nearest_neighbor_method" value="$(arg nearest_neighbor_method)"/>
+  </node>
+</launch>

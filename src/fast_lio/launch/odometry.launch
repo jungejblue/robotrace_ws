@@ -1,0 +1,22 @@
+<launch>
+  <!-- Local LIO: the GPU localizer separately owns map -> odom. -->
+  <arg name="config" default="$(find fast_lio)/config/ouster.yaml" />
+  <arg name="odom_frame" default="odom" />
+  <!-- Virtual IMU frame avoids a second parent for bag's os_imu static TF. -->
+  <arg name="body_frame" default="lio_imu" />
+  <rosparam command="load" file="$(arg config)" />
+  <param name="publish/odom_frame" value="$(arg odom_frame)" />
+  <param name="publish/body_frame" value="$(arg body_frame)" />
+  <param name="feature_extract_enable" type="bool" value="false" />
+  <param name="point_filter_num" type="int" value="4" />
+  <param name="max_iteration" type="int" value="3" />
+  <param name="filter_size_surf" type="double" value="0.5" />
+  <param name="filter_size_map" type="double" value="0.5" />
+  <param name="cube_side_length" type="double" value="1000" />
+  <param name="runtime_pos_log_enable" type="bool" value="false" />
+  <node pkg="fast_lio" type="fastlio_mapping" name="laserMapping" output="screen" required="true">
+    <remap from="/Odometry" to="/lio/odom" />
+    <remap from="/cloud_registered_body" to="/lio/cloud_body" />
+    <remap from="/lio_gravity" to="/lio/gravity" />
+  </node>
+</launch>
