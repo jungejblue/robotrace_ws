@@ -1,0 +1,41 @@
+name: Offline checks
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  offline-tests:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Install standalone test dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends g++-10 libeigen3-dev python3
+      - name: Check shell syntax
+        run: |
+          while IFS= read -r -d '' script; do
+            bash -n "$script"
+          done < <(find scripts docker -type f -name '*.sh' -print0)
+      - name: Check ROS XML files
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import xml.etree.ElementTree as ET
+          files = sorted(set(Path('src').rglob('package.xml')) |
+                         set(Path('src').rglob('*.launch')))
+          for path in files:
+              ET.parse(path)
+          print(f'Parsed {len(files)} ROS XML files')
+          PY
+      - name: Run standalone Python and C++ tests
+        run: ./scripts/test.sh
+      # CUDA/ROS compilation, bag playback, TF runtime and GPU timing require
+      # the development container and hardware; they are separate validation.

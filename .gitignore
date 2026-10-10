@@ -8,7 +8,7 @@
 /install_*/
 /log/
 /log_*/
-/.catkin_workspace/
+/.catkin_workspace
 
 # Local datasets; keep placeholders and optional data instructions
 /data/*
