@@ -4,7 +4,7 @@ source "$(dirname -- "${BASH_SOURCE[0]}")/_common.sh"
 
 action="${1:-help}"
 if (($#)); then shift; fi
-container_name="${ROBOTRACE_CONTAINER:-robotrace-localization}"
+container_name="${ROBOTRACE_CONTAINER:-robotrace-ws}"
 image_name="${ROBOTRACE_IMAGE:-robotrace:localization-cuda}"
 data_dir=""
 cuda_base="nvidia/cuda:12.8.1-devel-ubuntu20.04"
@@ -25,10 +25,10 @@ case "$action" in
     printf '%s\n' \
       'Usage: ./scripts/container.sh build|start|shell|stop [options]' \
       'Options: --image IMAGE --name NAME --data-dir HOST_DIRECTORY --cuda-base IMAGE' \
-      'Default image: robotrace:localization-cuda; default container: robotrace-localization.' \
+      'Default image: robotrace:localization-cuda; default container: robotrace-ws.' \
       'start reuses that container only when its /ws mount is this workspace.' \
       '--data-dir mounts existing map/bags read-only at /ws/data.' \
-      'Example: ./scripts/container.sh start --image robotrace:cuda-dev --data-dir ../robotrace_ws/data'
+      'Example: ./scripts/container.sh start --name robotrace-ws --data-dir "$PWD/data"'
     exit 0 ;;
   build|start|shell|stop) ;;
   *) die "Unknown action: $action" ;;

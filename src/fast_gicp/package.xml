@@ -1,11 +1,13 @@
 <?xml version="1.0"?>
 <package format="2">
   <name>fast_gicp</name>
-  <version>0.0.0</version>
+  <version>0.1.0</version>
   <description>Pinned fast_gicp production libraries with the CUDA VGICP backend for ROS1 robotrace localization.</description>
-  <maintainer email="k.koide@aist.go.jp">k.koide</maintainer>
+  <maintainer email="jungejblue@users.noreply.github.com">jungejblue</maintainer>
+  <author email="k.koide@aist.go.jp">k.koide</author>
   <license>BSD-3-Clause</license>
-  <url type="repository">https://github.com/koide3/fast_gicp</url>
+  <url type="repository">https://github.com/jungejblue/robotrace_ws</url>
+  <url type="website">https://github.com/koide3/fast_gicp</url>
   <buildtool_depend>catkin</buildtool_depend>
   <depend>libpcl-all-dev</depend>
   <depend>eigen</depend>

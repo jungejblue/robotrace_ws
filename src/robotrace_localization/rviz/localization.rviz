@@ -1,0 +1,87 @@
+Panels:
+  - Class: rviz/Displays
+    Name: Displays
+  - Class: rviz/Views
+    Name: Views
+Visualization Manager:
+  Class: ""
+  Global Options:
+    Background Color: 32; 32; 32
+    Fixed Frame: map
+    Frame Rate: 30
+  Displays:
+    - Class: rviz/Grid
+      Name: Grid
+      Enabled: true
+      Cell Size: 5
+      Plane Cell Count: 40
+      Color: 80; 80; 80
+      Reference Frame: <Fixed Frame>
+    - Class: rviz/PointCloud2
+      Name: Prior map - gray
+      Enabled: true
+      Topic: /robotrace/prior_map
+      Queue Size: 1
+      Alpha: 1
+      Color: 160; 160; 160
+      Color Transformer: FlatColor
+      Position Transformer: XYZ
+      Style: Points
+      Size (Pixels): 1
+      Decay Time: 0
+    - Class: rviz/PointCloud2
+      Name: Submap - blue
+      Enabled: true
+      Topic: /robotrace/submap
+      Queue Size: 1
+      Alpha: 1
+      Color: 0; 128; 255
+      Color Transformer: FlatColor
+      Position Transformer: XYZ
+      Style: Points
+      Size (Pixels): 2
+      Decay Time: 0
+    - Class: rviz/PointCloud2
+      Name: Current LiDAR - green
+      Enabled: true
+      Topic: /lio/cloud_body
+      Queue Size: 5
+      Alpha: 1
+      Color: 0; 255; 0
+      Color Transformer: FlatColor
+      Position Transformer: XYZ
+      Style: Points
+      Size (Pixels): 3
+      Decay Time: 0
+    - Class: rviz/Path
+      Name: Localization path
+      Enabled: true
+      Topic: /robotrace/path
+      Queue Size: 1
+      Color: 255; 180; 0
+      Line Style: Lines
+      Line Width: 0.1
+    - Class: rviz/Pose
+      Name: IMU pose
+      Enabled: true
+      Topic: /robotrace/pose
+      Color: 255; 60; 60
+      Shape: Arrow
+  Tools:
+    - Class: rviz/Interact
+    - Class: rviz/MoveCamera
+    - Class: rviz/Select
+  Views:
+    Current:
+      Class: rviz/Orbit
+      Distance: 100
+      Focal Point:
+        X: 0
+        Y: 0
+        Z: 0
+      Pitch: 0.8
+      Yaw: 0.8
+      Target Frame: map
+Window Geometry:
+  Width: 1440
+  Height: 900

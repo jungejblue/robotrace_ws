@@ -1,4 +1,5 @@
 #include <robotrace_localization/gnss_seed.hpp>
+#include <robotrace_localization/runtime_parameters.hpp>
 
 #include <diagnostic_msgs/DiagnosticArray.h>
 #include <diagnostic_msgs/DiagnosticStatus.h>
@@ -48,15 +49,15 @@ class GnssInitializer {
 
     if (!configurationValid())
       throw std::invalid_argument("Invalid GNSS initializer parameters");
-    std::string rear_topic, front_topic, seed_topic;
+    std::string rear_topic, front_topic;
     pnh_.param<std::string>("rear_topic", rear_topic,
                            "/ublox_gps_rear/navpvt");
     pnh_.param<std::string>("front_topic", front_topic,
                            "/ublox_gps_front/navpvt");
-    pnh_.param<std::string>("seed_topic", seed_topic,
-                           "/robotrace/gnss_seed");
+    const std::string seed_topic = gnssSeedTopic(nh_, pnh_);
     seed_pub_ = nh_.advertise<geometry_msgs::PoseWithCovarianceStamped>(
         seed_topic, 1, true);
+    ROS_INFO_STREAM("GNSS seed output: " << nh_.resolveName(seed_topic));
     valid_pub_ = nh_.advertise<std_msgs::Bool>("/robotrace/gnss_seed_valid", 1,
                                             true);
     diagnostics_pub_ = nh_.advertise<diagnostic_msgs::DiagnosticArray>(

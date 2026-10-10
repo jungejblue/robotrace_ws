@@ -1,4 +1,8 @@
 # Fixed ENU assumption supplied in the conversation; verify against GLIM export.
+robotrace:
+  # Shared by GNSS seed publisher and GPU localizer subscriber.
+  gnss_seed_topic: /robotrace/gnss_seed
+
 gnss_initializer:
   enu_origin:
     latitude: 36.729539
@@ -7,7 +11,6 @@ gnss_initializer:
   map_frame: map
   rear_topic: /ublox_gps_rear/navpvt
   front_topic: /ublox_gps_front/navpvt
-  seed_topic: /robotrace/gnss_seed
   # Measurement UTC/iTOW tolerance, not bag arrival delay. Prefer shared epochs.
   pair_tolerance_s: 0.010
   max_sample_age_s: 1.0

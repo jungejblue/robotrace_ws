@@ -1,0 +1,5 @@
+ARG ROBOTRACE_BASE=robotrace:localization-cuda
+FROM ${ROBOTRACE_BASE}
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends ros-noetic-rviz \
+    && rm -rf /var/lib/apt/lists/*

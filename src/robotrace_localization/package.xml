@@ -3,8 +3,9 @@
   <name>robotrace_localization</name>
   <version>0.1.0</version>
   <description>FAST-LIO local odometry, RTK initialization and CUDA VGICP prior-map registration.</description>
-  <maintainer email="robotrace@example.invalid">Robotrace workspace maintainers</maintainer>
+  <maintainer email="jungejblue@users.noreply.github.com">jungejblue</maintainer>
   <license>BSD-3-Clause</license>
+  <url type="repository">https://github.com/jungejblue/robotrace_ws</url>
   <buildtool_depend>catkin</buildtool_depend>
   <depend>roscpp</depend><depend>geometry_msgs</depend><depend>nav_msgs</depend>
   <depend>sensor_msgs</depend><depend>std_msgs</depend><depend>std_srvs</depend>
@@ -12,5 +13,8 @@
   <depend>pcl_ros</depend><depend>pcl_conversions</depend><depend>ublox_msgs</depend>
   <depend>fast_gicp</depend><build_depend>eigen</build_depend>
   <exec_depend>fast_lio</exec_depend>
+  <exec_depend>rospy</exec_depend>
+  <exec_depend>tf</exec_depend>
+  <exec_depend>python3-numpy</exec_depend>
   <export/>
 </package>

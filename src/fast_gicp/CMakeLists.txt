@@ -97,3 +97,16 @@ install(DIRECTORY include/
 install(FILES LICENSE UPSTREAM_MANIFEST.json UPSTREAM.md
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
+install(FILES
+  thirdparty/Eigen/COPYING.README
+  thirdparty/Eigen/COPYING.MPL2
+  thirdparty/Eigen/COPYING.BSD
+  thirdparty/Eigen/COPYING.APACHE
+  thirdparty/Eigen/COPYING.MINPACK
+  thirdparty/Eigen/COPYING.LGPL
+  thirdparty/Eigen/COPYING.GPL
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/licenses/Eigen
+)
+install(FILES thirdparty/nvbio/LICENSE
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/licenses/NVBIO
+)

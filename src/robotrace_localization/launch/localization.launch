@@ -9,8 +9,10 @@
   <include file="$(find fast_lio)/launch/odometry.launch"/>
   <!-- lio_imu and os_imu denote the same physical frame but have distinct TF names.
        Preserve the bag's os_sensor -> os_imu and os_sensor -> os_lidar edges. -->
-  <node pkg="tf2_ros" type="static_transform_publisher" name="lio_imu_to_os_sensor"
-        args="-0.006253 0.011775 -0.007645 0 0 0 lio_imu os_sensor"/>
+  <!-- Read the same /mapping/extrinsic_T,R used by FAST-LIO. No second copy
+       of the calibration is kept in this launch file. -->
+  <node pkg="robotrace_localization" type="calibration_tf_node.py"
+        name="lio_imu_to_lidar" output="screen" required="true"/>
   <node pkg="robotrace_localization" type="gnss_initializer_node"
         name="gnss_initializer" output="screen" required="true"/>
   <node pkg="robotrace_localization" type="gpu_map_localizer_node"

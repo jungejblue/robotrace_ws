@@ -5,6 +5,8 @@
 # lio_imu is coincident with os_imu but has its own TF name to avoid two parents.
 common:
   lid_topic: /ouster/points
+  # Must match the incoming PointCloud2 frame; this is not os_lidar.
+  lidar_frame: os_sensor
   imu_topic: /ouster/imu
   time_offset_lidar_to_imu: 0.0
 preprocess:

@@ -21,8 +21,10 @@ Livox SDK, Python embedding, matplotlib or startup ICP is required.
 - About 300 valid IMU samples are needed for initialization (about 3 s at
   100 Hz). Start from a stationary vehicle; `LIO_INITIALIZING` is expected.
 - `LIO_EMPTY_INPUT`, `LIO_WAIT_IMU`, `LIO_EMPTY_DESKEW`, and
-  `LIO_TOO_FEW_VOXEL` identify different failed stages. The previous repeated
-  `No point` issue remains unverified until the user's actual bag is replayed.
+  `LIO_TOO_FEW_VOXEL` identify different failed stages. The existing Docker
+  configuration completed the user's `ochang2` bag replay and generated backend metrics; input parsing is no longer described
+  as unverified on that run. Revalidate new bags and this update in the target
+  ROS/CUDA environment.
 - Duplicate/slightly out-of-order stamps are dropped. A backward jump of
   at least 0.1 s clears all input queues and stops the node; restart the whole
   launch before rewinding/replaying a bag. The local EKF is not reset in place.
@@ -39,7 +41,19 @@ are required):
 roslaunch fast_lio odometry.launch
 ```
 
-Use the top-level workspace instructions for building and running the full
-FAST-LIO2 + FastVGICPCuda + GNSS initialization pipeline. This cleaned package
-has been statically checked; full ROS/CUDA compilation and bag replay must
-be performed in the user's Docker environment.
+Use the [top-level workspace instructions](../../README.md) for building and
+running the full FAST-LIO2 + FastVGICPCuda + GNSS initialization pipeline.
+The supplied RTX 5060 Ti Docker configuration has user-reported successful
+CUDA compilation and bag replay. This update still requires a full rebuild
+and replay in the target environment; offline checks do not establish
+absolute accuracy or AGX Orin performance.
+
+The LiDAR-to-IMU calibration in `mapping/extrinsic_R,T` is also used by the
+backend package's static TF node. Configure the input cloud frame with
+`common/lidar_frame`; do not maintain a second numeric extrinsic in launch.
+See [calibration and frames](../../docs/calibration.md).
+
+The exact repository and commit of the supplied FAST_LIO_LOCALIZATION
+snapshot are not established. Do not interpret this package as an unmodified
+upstream release. Original licenses and notices are retained; see
+[third-party notices](../../THIRD_PARTY_NOTICES.md).

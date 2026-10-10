@@ -1,4 +1,5 @@
 #include <robotrace_localization/pose_math.hpp>
+#include <robotrace_localization/runtime_parameters.hpp>
 #include <ros/ros.h>
 #include <geometry_msgs/PoseStamped.h>
 #include <geometry_msgs/PoseWithCovarianceStamped.h>
@@ -74,6 +75,7 @@ class GpuMapLocalizer {
     pnh_.param<std::string>("body_frame", body_frame_, "lio_imu");
     pnh_.param<std::string>("nearest_neighbor_method", nn_method_, "CPU_PARALLEL_KDTREE");
     pnh_.param<std::string>("metrics_path", metrics_path_, "");
+    const std::string seed_topic = rl::gnssSeedTopic(nh_, pnh_);
     pnh_.param("registration_hz", hz_, 5.0);
     pnh_.param("source_leaf_m", source_leaf_, 0.3);
     pnh_.param("target_leaf_m", target_leaf_, 0.3);
@@ -162,7 +164,8 @@ class GpuMapLocalizer {
     status_pub_ = nh_.advertise<std_msgs::String>("/robotrace/localization_status", 1, true);
     valid_pub_ = nh_.advertise<std_msgs::Bool>("/robotrace/localization_valid", 1, true);
     diagnostics_pub_ = nh_.advertise<diagnostic_msgs::DiagnosticArray>("/robotrace/localization_diagnostics", 2);
-    seed_sub_ = nh_.subscribe("/robotrace/gnss_seed", 20, &GpuMapLocalizer::seedCallback, this);
+    seed_sub_ = nh_.subscribe(seed_topic, 20, &GpuMapLocalizer::seedCallback, this);
+    ROS_INFO_STREAM("GNSS seed input: " << nh_.resolveName(seed_topic));
     gravity_sub_ = nh_.subscribe("/lio/gravity", 10, &GpuMapLocalizer::gravityCallback, this);
     reset_srv_ = pnh_.advertiseService("reset", &GpuMapLocalizer::resetCallback, this);
     sync_.registerCallback(boost::bind(&GpuMapLocalizer::scanCallback, this, boost::placeholders::_1, boost::placeholders::_2));
